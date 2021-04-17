@@ -1,0 +1,166 @@
+<section>
+
+
+  <div class="carousel" data-flickity='{ "wrapAround": true }' style="margin-top: -50px;">
+    <% @pet.pet_photos.each do |photo| %>
+      <%= image_tag url_for(photo), class: 'carousel-cell' %>
+    <% end %>
+  </div>
+
+  <div class="container py-5">
+    <div class="row">
+      <!-- Left Column-->
+      <div class="col-lg-8">
+        <!-- Location titiel About -->
+        <div class="tex-block">
+          <p class="text-primary">
+          <i class="fa fa-map-marker-alt mr-1"></i>
+            Montreal Canada
+          </p>
+          <h1><%= @pet.title %></h1>
+          <ul class="list-inline text-sm mb-4">
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Breed:</span>
+              Mix
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Age:</span>
+              <%= pluralize(@pet.age, 'Year') %> 
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Sex:</span>
+              Female
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Weight:</span>
+              <%= @pet.weight %> Kg
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <i class="<%= @pet.michrochip? ? 'fa fa-check text-primary' : 'fa fa-times text-danger' %> mr-1 "></i>
+              Microchiped
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <i class="<%= @pet.is_spayed ? 'fa fa-check text-primary' : 'fa fa-times text-danger' %> mr-1"></i>
+              Spayed
+            </li>
+          </ul>
+          <h4 class="mb-3">About</h4>
+          <p><%= @pet.pet_description %></p>
+        </div>
+        <!-- Video -->
+        <div class="text-block">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="<%= video_embed(@pet.video) %>" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- Vaccinations & Microchip -->
+        <div class="text-block">
+          <h4 class="mb-4">Vaccinations & Microchip</h4>
+          <div class="row">
+            <div class="col-lg-6">
+              <ul class="list-unstyled text-muted">
+                <li class="mb-2">
+                  <i class="text-center text-secondary fa fa-check mr-3"></i>
+                  Rabies A
+                </li>
+                <li class="mb-2">
+                  <i class="text-center text-secondary fa fa-check mr-3"></i>
+                  Rabies A
+                </li>
+                <li class="mb-2">
+                  <i class="text-center text-primary fa fa-check mr-3"></i>
+                  Rabies A
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-6">
+              <ul class="list-unstyled text-muted">
+                <li class="mb-2">
+                  <i class="text-center text-success fa fa-check mr-3"></i>
+                  Rabies A
+                </li>
+                <li class="mb-2">
+                  <i class="text-center text-success fa fa-check mr-3"></i>
+                  Rabies A
+                </li>
+                <li class="mb-2">
+                  <i class="text-center tex-secondary fa fa-check mr-3"></i>
+                  Rabies A
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Addiotional Info -->
+        <div class="text-block">
+          <h4 class="mb-3">Additional Info</h4>
+          <ul class="list-inline">
+          <% if @pet.is_dog_friendly %>
+            <li class="list-inline-item mb-2">
+              <span class="badge badge-pill badge-light p-3 text-muted">Dog friendly</span>
+            </li>
+          <% end %>
+
+          <% if @pet.is_cat_friendly %>
+            <li class="list-inline-item mb-2">
+              <span class="badge badge-pill badge-light p-3 text-muted">Cat friendly</span>
+            </li>
+          <% end %>
+          <% if @pet.is_dominant %>
+            <li class="list-inline-item mb-2">
+              <span class="badge badge-pill badge-light p-3 text-muted">Dominant</span>
+            </li>
+          <% end %>
+          <% if @pet.is_shows_past_abuse %>
+            <li class="list-inline-item mb-2">
+              <span class="badge badge-pill badge-light p-3 text-muted">Shows signs of post abuse</span>
+            </li>
+          <% end %>
+          <% if @pet.is_people_friendly %>
+            <li class="list-inline-item mb-2">
+              <span class="badge badge-pill badge-light p-3 text-muted">Friendly with people</span>
+            </li>
+          <% end %>
+       
+          </ul>
+        </div>
+        <!-- About the owner of pet -->
+        <div class="text-block">
+          <div class="media">
+            <%= image_tag avatar_url(@pet.user), class: 'avatar-show mr-4' %>
+            <div class="media-body">
+              <p>
+                <span class="text-muted text-uppercase text-sm">Pet Founder</span>
+                <br>
+                <strong>
+                  <%= @pet.user.organization.blank? ? @pet.user.fullname : @pet.user.organization %>
+                </strong>
+              </p>
+              <p class="text-sm"><%= @pet.user.about %></p>
+
+              <p>
+                <% if @pet.user.pets.count > 1 %>
+                  <a href="">
+                   See <%= @pet.user.fullname %>'s <%= @pet.user.pets.count %> other pets for adoption
+                    <i class="fa fa-long-arrow-alt-right ml-2"></i>
+                  </a>
+                <% end %>
+              </p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- RIght Column-->
+      <div class="col-lg-4">
+        <div class="shadow p-4 ml-lg-3">
+          <h6 class="p-1"><%= @pet.user.organization.blank? ? @pet.user.fullname : @pet.user.organization %></h6>
+          <button class="btn btn-block btn-primary">Adopt Me</button>
+          <hr>
+          <p class="text-muted text-sm p-1">Share this</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

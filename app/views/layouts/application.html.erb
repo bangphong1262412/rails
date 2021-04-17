@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Petadoption</title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+
+  <body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content" style="background-color: #fff;">
+
+          
+
+          <% unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) %>
+            <%= render 'shared/navbar' %>
+          <% end %>
+
+          <%= render 'shared/messages' %>
+
+          <%= yield %>
+
+          
+
+        </div>
+        
+      </div>
+
+    </div>
+    
+  </body>
+</html>

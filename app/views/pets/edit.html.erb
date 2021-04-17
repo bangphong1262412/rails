@@ -1,0 +1,231 @@
+<section class="py-4">
+  <div class="container">
+
+    <p class="subtitle text-primary">
+      Please continue to fill out the fields
+    </p>
+    <h1 class="h2">Pet Details</h1>
+
+    <%= form_for @pet do |f| %>
+      <!-- Form  -->
+     
+      <div class="form-group">
+        <label>Pet's Name</label>
+        <%= f.text_field :title, autocomplete: 'title', class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <label>Pet's Category</label>
+        <%= f.select(:category_id, options_for_select(@categories.map{ |c| [c.name, c.id]}, selected: @pet.category_id), { wraper: {} }, { class: 'custom-select mb-3'}) %>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="form-group ">
+            <%= f.check_box :is_dog_friendly, class: 'myclass1 ml-1 mt-2' %>
+            <%= f.label :is_dog_friendly, class: 'myclass1 ml-1' do %>
+              Friendly with dogs
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="form-group ">
+            <%= f.check_box :is_cat_friendly, class: 'myclass1 ml-1 mt-2' %>
+            <%= f.label :is_cat_friendly, class: 'myclass1 ml-1' do %>
+              Friendly with cats
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="form-group ">
+            <%= f.check_box :is_dominant, class: 'myclass1 ml-1 mt-2' %>
+            <%= f.label :is_dominant, class: 'myclass1 ml-1' do %>
+              Dominant alpha male/female
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="form-group ">
+            <%= f.check_box :is_people_friendly, class: 'myclass1 ml-1 mt-2' %>
+            <%= f.label :is_people_friendly, class: 'myclass1 ml-1' do %>
+              Friendly with strangers
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="form-group ">
+            <%= f.check_box :is_shows_past_abuse, class: 'myclass1 ml-1 mt-2' %>
+            <%= f.label :is_shows_past_abuse, class: 'myclass1 ml-1' do %>
+              Clear signs of abused past
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="form-group ">
+            <%= f.check_box :is_barks_alot, class: 'myclass1 ml-1 mt-2' %>
+            <%= f.label :is_barks_alot, class: 'myclass1 ml-1' do %>
+              This dog barks a lot
+            <% end %>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="row py-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label>Pet Age</label>
+            <%= f.number_field :age, placeholder: 'Enter age', class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label>Pet Weight / Kg</label>
+            <%= f.number_field :weight, placeholder: 'Enter weight In KG', class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label>Microchip Number (If Microchiped)</label>
+            <%= f.text_field :michrochip, placeholder: 'Microchip Number', class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Pet Description</label>
+        <%= f.rich_text_area :pet_description, class: 'form-control', rows: '20' %>
+        <small class="form-text text-muted">Tell your user what you need them to write about. Tell your user what you need them to write about</small>
+      </div>
+
+      <div class="form-group">
+        <label>Pet Youtube URL</label>
+        <%= f.text_field :video, autocomplete: 'video', class: 'form-control' %>
+      </div>
+
+      <div class="form-group ">
+        <%= f.check_box :is_spayed, class: 'myclass1 ml-1 mt-2' %>
+        <%= f.label :is_spayed, class: 'myclass1' do %>
+          Spayed / Neutered
+        <% end %>
+        <small class="form-text text-muted">Neutered or Spayed if the dog has been fixed, canot reproduce. Check this box.</small>
+      </div>
+
+      <hr>
+
+      <!-- Has One Transport Cost Check Box -->
+      <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Important</h4>
+        <p>Please indicate the costs associated with this pet. There is always a cost, primarly most costs are associated with transporation. This is why we've createtd 3 main transportation costs. They are Local, National and International. You must check this boxif you only want your pet to be adoted localy within your neighbourhood or anywhere close to you.</p>
+        <hr>
+        <p class="mb-4">If you are not sure of the associated costs in transporting your pet by or to far away places, you can check the box for now to indicate local delivery only and fill out the local fields. You must have at least one cost associated with the pet.</p>
+        <div class="form-group ">
+          <%= f.check_box :has_one_transport_cost, class: 'myclass1 ml-1 mt-2', onchange: "this.form.submit();" %>
+          <%= f.label :has_one_transport_cost, class: 'myclass1' do %>
+            Check only if you want the pet to be adopted locally within the neighbourhood.
+          <% end %>
+        </div>
+      </div>
+      
+
+      <div class="row form-group">
+        <%= f.fields_for :costs, @pet.costs.order(:cost_type) do |c| %>
+          <div class="col-lg-4 <%= 'my-hidden' if @pet.has_one_transport_cost && !c.object.local?  %>">
+            <%= c.hidden_field :cost_type %>
+
+            <div class="card border-primary mb-3">
+              <div class="card-header bg-transparent border-primary">
+                <h6 class="mb-0"><%= c.object.cost_type.capitalize %></h6>
+              </div>
+              <div class="card-body text-muted">
+                <div class="form-group">
+                  <label for="">Name of cost</label>
+                  <%= c.text_field :title, placeholder: c.object.cost_type.capitalize, class: 'form-control text-primary' %>
+                </div>
+                <div class="form-group">
+                  <label for="">Describe the <%= c.object.cost_type.capitalize %> transportation to the best of your ability</label>
+                  <%= c.text_area :description, placeholder: 'Description', rows: '5', class: 'form-control text-primary' %>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-muted">
+                <div class="form-group">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">Days</div>
+                    </div>
+                    <%= c.number_field :transport_time, placeholder: 'Pet delivery time', class: 'form-control text-primary' %>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-muted">
+                <div class="form-group">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">Cost</div>
+                    </div>
+                    <%= c.number_field :cost, placeholder: 'Total cost', class: 'form-control text-primary' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+
+
+      <!-- Photo Uplaod Box from Dropzone.js-->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="dropzone" action="/pets/<%= @pet.id %>/upload_pet_photos" id="petDropzone">
+            <div class="dz-message d-flex flex-column">
+              <i class="material-icons text-primary">cloud_upload</i>
+              Drag & Drop Or Click here to upload photos
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- List all photos goes here-->
+      <div class="row p-3">
+        <% @pet.pet_photos.each do |photo| %>
+          <div class="col-lg-4 p-1">
+            <%= image_tag url_for(photo), class: 'pet-image' %>
+            <div class="card-image-overlay-bottom">
+              <%= link_to delete_pet_photos_pet_url(pet_photo_id: photo.id, id: @pet.id), method: :delete, data: {confirm: "Are you Sure!", class: 'pet-delete'} do %>
+                <div class="pet-delete">Delete</div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- END Photo Uplaod Box from Dropzone.js-->
+      <div class="ml-auto float-right mr-2 mt-3">
+        <%= f.submit "Publish", class: 'btn btn-primary' %>
+      </div>
+
+
+          
+
+
+        
+
+    <% end %>
+
+
+  </div>
+</section>
+
+
+<script>
+  Dropzone.options.petDropzone = {
+    paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 2, // MB
+    acceptedfFiles: 'image/*',
+    init: function() {
+      this.on('complete', function (file) {
+        location.reload();
+      })
+    }
+  };
+</script>

@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row">
+
+    <!-- Profile -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+
+
+          
+          <%= image_tag 'woman.png', class: 'mx-auto d-block img-thumbnail profile-round' %>
+          
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Form -->
+    <div class="col-xl-8 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Edit your details</h6>
+          
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+            
+            <div class="form-group row">
+              <div class="col-6">
+                <label>Full Name</label>
+                <%= f.text_field :fullname, autofocus: true, autocomplete: "fullname", class: "form-control" %>
+              </div>
+              <div class="col-6">
+                <label>Email</label>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+              </div>
+              
+            </div>
+
+            <div class="form-group row">
+              <div class="col-6">
+                <label>Organization</label>
+                <%= f.text_field :organization, autofocus: true, autocomplete: "organization", class: "form-control" %>
+              </div>
+               <div class="col-6">
+                <label>Language</label>
+                <%= f.text_field :language, autofocus: true, autocomplete: "language", class: "form-control" %>
+              </div>
+              
+            </div>
+
+
+            <div class="form-group">
+              <label>About</label>
+              <%= f.text_area :about, autofocus: true, autocomplete: "about", class: "form-control", rows: "5" %>
+            </div>
+
+            <hr>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+            <div class="form-group">
+              <label>New Password 
+                <span class="text-warning">(Leave it blank if you don't want to change it)</span>
+                <span class="text-muted">
+                  <% if @minimum_password_length %>
+                    <br />
+                    <em><%= @minimum_password_length %> characters minimum</em>
+                  <% end %>
+                </span>
+                <%= f.password_field :password, autocomplete: false, placeholder: 'New password', class: 'form-control', readonly: 'readonly', onfocus: "javascript: this.removeAttribute('readonly')" %>
+              </label>
+              
+            </div>
+            
+            <div class="form-group">
+              <label>Confirm your new password</label>
+              <%= f.password_field :password_confirmation, autocomplete: false, placeholder: 'Confirm new password', class: 'form-control', readonly: 'readonly', onfocus: "javascript: this.removeAttribute('readonly')" %>
+            </div>
+            
+            <%= f.submit "Update Profile", class: 'btn btn-primary btn-small' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
