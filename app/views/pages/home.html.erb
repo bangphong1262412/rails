@@ -1,3 +1,166 @@
-<h1>Pages#home</h1>
-<h2>Hey There</h2>
-<p>Find me in app/views/pages/home.html.erb</p>
+<main role="main">
+
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+      <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+      <li data-target="#myCarousel" data-slide-to="2" class="active"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item">
+        <%= image_tag "banner-2.jpg", class: 'bd-placeholder-img' %>
+        <div class="container">
+          <div class="carousel-caption text-left">
+            <h1>Example headline.</h1>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "banner-1.jpg", class: 'bd-placeholder-img' %>
+        <div class="container">
+          <!-- 
+          <div class="carousel-caption">
+            <h1>Another example headline.</h1>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+          </div>
+          -->
+        </div>
+      </div>
+      <div class="carousel-item active">
+        <%= image_tag "banner-3.jpg", class: 'bd-placeholder-img' %>
+        <div class="container">
+          <div class="carousel-caption text-right">
+            <h1>One more for good measure.</h1>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing mt-5">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <%= image_tag "Employee-1.jpg", class: 'bd-placeholder-img rounded-circle profile-round' %>
+        <h2>J.K. Symancyk</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <%= image_tag "Employee-2.jpg", class: 'bd-placeholder-img rounded-circle profile-round' %>
+        <h2>Dr. Mark Stetter, DVM</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <%= image_tag "Employee-3.jpg", class: 'bd-placeholder-img rounded-circle profile-round' %>
+        <h2>Elizabeth McLaughlin</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <% Pet.first(3).each do |p| %>
+      <hr class="featurette-divider">
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading"><%= link_to p.title, pet_path(p) %></h2>
+          <ul class="list-inline text-sm mb-4">
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Breed:</span>
+              Mix
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Age:</span>
+              <%= pluralize(p.age, 'Year') %> 
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Sex:</span>
+              Female
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <span class="text-secondary">Weight:</span>
+              <%= p.weight %> Kg
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <i class="<%= p.michrochip? ? 'fa fa-check text-primary' : 'fa fa-times text-danger' %> mr-1 "></i>
+              Microchiped
+            </li>
+            <li class="list-inline-item mr-3 mb-2">
+              <i class="<%= p.is_spayed ? 'fa fa-check text-primary' : 'fa fa-times text-danger' %> mr-1"></i>
+              Spayed
+            </li>
+          </ul>
+
+          <p class="lead"><%= p.pet_description %></p>
+        </div>
+        <div class="col-md-5">
+          <%= link_to "#{image_tag missing_pet_img(p), class: 'bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto rounded'}".html_safe, pet_path(p) %>
+          <%=  %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+  <div class="mt-5 pt-5 pb-5 footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-xs-12 about-company">
+          <h2>Heading</h2>
+          <p class="pr-5 text-white-50">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac ante mollis quam tristique convallis </p>
+          <p><a href="#"><i class="fa fa-facebook-square mr-1"></i></a><a href="#"><i class="fa fa-linkedin-square"></i></a></p>
+        </div>
+        <div class="col-lg-3 col-xs-12 links">
+          <h4 class="mt-lg-0 mt-sm-3">Links</h4>
+            <ul class="m-0 p-0">
+              <li>- <a href="#">Lorem ipsum</a></li>
+              <li>- <a href="#">Nam mauris velit</a></li>
+              <li>- <a href="#">Etiam vitae mauris</a></li>
+              <li>- <a href="#">Fusce scelerisque</a></li>
+              <li>- <a href="#">Sed faucibus</a></li>
+              <li>- <a href="#">Mauris efficitur nulla</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-xs-12 location">
+          <h4 class="mt-lg-0 mt-sm-4">Location</h4>
+          <p>22, Lorem ipsum dolor, consectetur adipiscing</p>
+          <p class="mb-0"><i class="fa fa-phone mr-3"></i>(541) 754-3010</p>
+          <p><i class="fa fa-envelope-o mr-3"></i>info@hsdf.com</p>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col copyright">
+          <p class=""><small class="text-white-50">© 2019. All Rights Reserved.</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
